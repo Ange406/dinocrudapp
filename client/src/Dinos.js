@@ -92,16 +92,32 @@ export default class Dinos extends React.Component {
 
     submitCreate(event) {
         event.preventDefault();
-        let currentId = 0;
-        if (this.state.dinosaurs.length > 0) {
-            currentId = this.state.dinosaurs[this.state.dinosaurs.length - 1].id
-        }
+        axios.post('/dino', {
+            name: this.state.name,
+            height: this.state.height,
+            weight: this.state.weight,
+            era: this.state.era,
+            diet: this.state.diet
+          })
+          .then((response)=> {
+            console.log(response.data);
+            this.setState({ dinosaurs: response.data.dinos })
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        
+        // let currentId = 0;
+        // if (this.state.dinosaurs.length > 0) {
+        //     currentId = this.state.dinosaurs[this.state.dinosaurs.length - 1].id
+        // }
 
-        let newDino = { id: currentId + 1, name: this.state.name, height: this.state.height, weight: this.state.weight, era: this.state.era, diet: this.state.diet }
-        let theDinos = this.state.dinosaurs.slice()
-        theDinos.push(newDino)
-        this.setState({ dinosaurs: theDinos })
-        localStorage.setItem("dinoStorage", JSON.stringify(theDinos));
+        // let newDino = { id: currentId + 1, name: this.state.name, height: this.state.height, weight: this.state.weight, era: this.state.era, diet: this.state.diet }
+        // let theDinos = this.state.dinosaurs.slice()
+        // theDinos.push(newDino)
+        // this.setState({ dinosaurs: theDinos })
+        // localStorage.setItem("dinoStorage", JSON.stringify(theDinos));
 
     }
 
@@ -183,7 +199,7 @@ export default class Dinos extends React.Component {
                         </Navbar>
                     </div>
 
-                    <Route exact path="/" component={DinoSlides} />
+                    {/*<Route exact path="/" component={DinoSlides} /> */}
 
                     <Route path="/display"
                         render={() => <DisplayDinoForm

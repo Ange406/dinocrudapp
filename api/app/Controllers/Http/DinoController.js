@@ -27,7 +27,7 @@ class DinoController {
         const newDino = await Dino.create({ name, height, weight, diet, era })
         let dinos = await Dino.all()
         response.send({
-            data: dinos
+            dinos: dinos
 
         })
 
