@@ -16,4 +16,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+Route.get('/dino', "DinoController.getDino")
+Route.post('/dino', "DinoController.createDino")
+Route.delete('/dino/:id', "DinoController.deleteDino")
+Route.put('/dino/:id', "DinoController.updateDino")

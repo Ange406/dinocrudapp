@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+
 import {
     Collapse,
     Navbar,
@@ -63,7 +65,7 @@ export default class Dinos extends React.Component {
             "Diet: " + item.diet
         )
     }
-    
+
     deleteDino(id) {
         let newDinos = this.state.dinosaurs.filter(dinosaur => dinosaur.id !== id)
         this.setState({ dinosaurs: newDinos })
@@ -131,34 +133,17 @@ export default class Dinos extends React.Component {
             era: "",
             diet: "",
             //reset the name 
-            
         })
-        
     }
-    
+
     componentDidMount() {
-        let initialDinosaurs = []
-        initialDinosaurs = JSON.parse(localStorage.getItem("dinoStorage"));
-        if (initialDinosaurs) { if (initialDinosaurs.length === 0) { initialDinosaurs = 0 } } // make sure its not an empty array
-        if (!initialDinosaurs) {
-            initialDinosaurs = [
-                { id: 0, name: 'Parasaurolophus', height: '16ft', weight: '2268 kg', era: 'Late Cretaceous', diet: 'Herbivore' },
-
-                { id: 1, name: 'Brachiosaurus', height: '31ft', weight: '35000 kg', era: 'Late Jurassic', diet: 'Herbivore' },
-
-                { id: 2, name: 'Gallimimus', height: '6ft', weight: '440 kg', era: 'Late Cretaceous', diet: 'Insectivorous' },
-
-                { id: 3, name: 'Dilophosaurus', height: '6ft', weight: '283 kg', era: 'Early Jurassic', diet: 'Scavenger' },
-
-                { id: 4, name: 'Triceratops', height: '9ft', weight: '10886 kg', era: 'Late Cretaceous', diet: 'Herbivore' },
-
-                { id: 5, name: 'Tyrannosaurus', height: '12ft', weight: '7257 kg', era: 'Late Cretaceous', diet: 'Carnivore' },
-
-                { id: 6, name: 'Velociraptor', height: '2ft', weight: '15 kg', era: 'Late Cretaceous', diet: 'Carnivore' }
-
-            ];
-        }
-        this.setState({ dinosaurs: initialDinosaurs })
+        axios.get('/dino')
+            .then((response) => {
+                this.setState({ dinosaurs: response.data.dinos })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
     render() {
         return (
@@ -213,14 +198,14 @@ export default class Dinos extends React.Component {
                             submitEdit={this.submitEdit}
                         />}
                     />
-                    <Route path="/create" 
+                    <Route path="/create"
                         render={() => <CreateDinoForm
-                        dinosaurs={this.state.dinosaurs}
-                        
-                        handleChange={this.handleChange}
-                        submitCreate={this.submitCreate}
-                        />} 
-                        />
+                            dinosaurs={this.state.dinosaurs}
+
+                            handleChange={this.handleChange}
+                            submitCreate={this.submitCreate}
+                        />}
+                    />
                 </div>
             </Router>
         );
