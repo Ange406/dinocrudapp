@@ -4,6 +4,11 @@ import { Row, Col } from 'reactstrap';
 export default class DisplayDinoForm extends React.Component {
     constructor(props) {
         super(props)
+        // this.deleteDino = this.deleteDino.bind(this);
+    }
+    componentDidMount(){
+        // console.log(this.props)
+        // this.props.deleteDino(5)
     }
     //Display Functions
     displayEditDinos() {

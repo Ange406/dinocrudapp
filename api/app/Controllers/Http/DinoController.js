@@ -39,7 +39,7 @@ class DinoController {
         let dinos = await Dino.all()
         response.json({
             Message: "This Dino's gone extinct!",
-            data: dinos
+            dinos: dinos
         })
     }
 
@@ -57,7 +57,7 @@ class DinoController {
         await dinoToUpdate.save()
         let dinos = await Dino.all()
         response.send({
-            data: dinos
+            dinos: dinos
         })
 
     }

@@ -59,7 +59,7 @@ export default class CreateDinoForm extends React.Component {
                 <Col md={2}>
                 </Col>
                 <Col md={4}>
-                    {this.displayReadDinos()}
+                    {/* {this.displayReadDinos()} */}
                 </Col>
                 <Col md={4}>
                     {this.displayCreateDino()}
