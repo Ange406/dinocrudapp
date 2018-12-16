@@ -2,20 +2,7 @@
 const Dino = use('App/Models/Dino')
 
 class DinoController {
-    // Route.get('/dino', "DinoController.getDino")
-    // Route.post('/dino', "DinoController.createDino")
-    // Route.delete('/dino', "DinoController.deleteDino")
-    // Route.put('/dino', "DinoController.updateDino")
-    // class WorldcapitalController {
-
-    //     async displayCapital({ request, response }) {
-    //       let country = await Country.all()
-    //       response.json({
-    //         data: country
-    //       })
-    //     }
     async getDino({ request, response }) {
-        //things
         let dinos = await Dino.all()
         response.send({
             dinos: dinos
@@ -45,8 +32,6 @@ class DinoController {
 
     async updateDino({ request, response, params: { id } }) {
         var dinoToUpdate = await Dino.find(id)
-        //do cool things
-
         const { name, weight, height, era, diet } = request.post()
         dinoToUpdate.name = name
         dinoToUpdate.weight = weight
