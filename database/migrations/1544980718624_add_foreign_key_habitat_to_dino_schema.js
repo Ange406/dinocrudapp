@@ -7,7 +7,7 @@ class AddForeignKeyHabitatToDinoSchema extends Schema {
   up () {
     this.table('dinos', (table) => {
       // alter table
-      table.integer('habitat_id').unsigned().references('id').inTable('habitat')
+      table.integer('habitat_id')//.unsigned().references('id').inTable('habitat')
     })
   }
 
