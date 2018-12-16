@@ -67,15 +67,8 @@ export default class Dinos extends React.Component {
     }
 
     deleteDino(id) {
-        // let newDinos = this.state.dinosaurs.filter(dinosaur => dinosaur.id !== id)
-        // this.setState({ dinosaurs: newDinos })
-        // localStorage.setItem("dinoStorage", JSON.stringify(newDinos));
+        //This is the actual delete
         axios.delete('/dino/'+id, {
-            // name: this.state.name,
-            // height: this.state.height,
-            // weight: this.state.weight,
-            // era: this.state.era,
-            // diet: this.state.diet
           })
           .then((response)=> {
             this.setState({ dinosaurs: response.data.dinos })
@@ -92,16 +85,21 @@ export default class Dinos extends React.Component {
     }
 
     updateDino(newDino) {
-        let newDinoObj = this.state.dinosaurs.map((oldDino) => {
-            if (oldDino.id === newDino.id) {
-                return newDino;
-            }
-            else {
-                return oldDino;
-            }
-        })
-        this.setState({ dinosaurs: newDinoObj })
-        localStorage.setItem("dinoStorage", JSON.stringify(newDinoObj));
+        //This is the actual update to the dino
+        axios.delete('/dino/'+newDino.id, {
+             name: newDino.name,
+             height: newDino.height,
+             weight: newDino.weight,
+             era: newDino.era,
+             diet: newDino.diet
+          })
+          .then((response)=> {
+            this.setState({ dinosaurs: response.data.dinos })
+            
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     }
 
     submitCreate(event) {
