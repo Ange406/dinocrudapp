@@ -14,6 +14,7 @@
 const Factory = use('Factory')
 const Database = use('Database')
 
+
 class DinoSeeder {
   async run() {
     await Factory.model('App/Models/Dino').create({ name: 'Parasaurolophus', height: '16ft', weight: '2268 kg', era: 'Late Cretaceous', diet: 'Herbivore' })
