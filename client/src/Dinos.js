@@ -7,17 +7,13 @@ import {
     NavbarToggler,
     NavbarBrand,
     Nav,
-    NavItem,
-    NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem
+    NavItem
 } from 'reactstrap';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import CreateDinoForm from './CreateDinoForm.js';
 import DisplayDinoForm from './DisplayDinoForm.js';
-import DinoSlides from './Carousel.js'
+import HabitatDinoForm from './HabitatDinoForm.js';
+// import DinoSlides from './Carousel.js'
 
 export default class Dinos extends React.Component {
     constructor() {
@@ -52,13 +48,14 @@ export default class Dinos extends React.Component {
         this.submitEdit = this.submitEdit.bind(this);
         this.submitCreate = this.submitCreate.bind(this);
         this.toggle = this.toggle.bind(this);
+        this.displayHabitats = this.displayHabitats.bind(this);
 
     }
     toggle() {
         this.setState({
-          isOpen: !this.state.isOpen
+            isOpen: !this.state.isOpen
         });
-      }
+    }
     handleChange(event) {
         let name = event.target.name;
         this.setState({
@@ -171,6 +168,19 @@ export default class Dinos extends React.Component {
                 console.log(error);
             });
     }
+    displayHabitats(e) {
+        if (e.target.value) {
+            axios.get('/dino/habitat/' + e.target.value)
+                .then((response) => {
+                    
+                    this.setState({ dinosaurs: response.data.dinos })
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
+
+    }
     render() {
         return (
             <Router>
@@ -182,19 +192,17 @@ export default class Dinos extends React.Component {
                             <Collapse isOpen={this.state.isOpen} navbar>
                                 <Nav className="ml-auto" navbar>
                                     <NavItem>
-                                        <NavLink>
-                                            <Link to="/">Home</Link>
-                                        </NavLink>
+                                        <Link to="/">Home</Link>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink>
-                                            <Link to="/display">Display</Link>
-                                        </NavLink>
+                                        <Link to="/display">Display</Link>
+                                    </NavItem>
+
+                                    <NavItem>
+                                        <Link to="/create">Create</Link>
                                     </NavItem>
                                     <NavItem>
-                                        <NavLink>
-                                            <Link to="/create">Create</Link>
-                                        </NavLink>
+                                        <Link to="/habitat">Habitat</Link>
                                     </NavItem>
                                 </Nav>
                             </Collapse>
@@ -226,6 +234,14 @@ export default class Dinos extends React.Component {
                             submitCreate={this.submitCreate}
                         />}
                     />
+                    <Route path="/habitat"
+                        render={() => <HabitatDinoForm
+                            dinosaurs={this.state.dinosaurs}
+                            handleChange={this.handleChange}
+                            displayHabitats={this.displayHabitats}
+                        />}
+                    />
+
                 </div>
             </Router>
         );

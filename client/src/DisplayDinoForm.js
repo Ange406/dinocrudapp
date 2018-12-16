@@ -4,7 +4,7 @@ import { Row, Col } from 'reactstrap';
 export default class DisplayDinoForm extends React.Component {
     constructor(props) {
         super(props)
-        // this.deleteDino = this.deleteDino.bind(this);
+        this.state = {}
     }
     componentDidMount(){
         // console.log(this.props)

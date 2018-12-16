@@ -5,6 +5,7 @@ import { Row, Col } from 'reactstrap';
 export default class CreateDinoForm extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {}
     }
     displayCreateDino() {
         return(

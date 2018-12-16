@@ -51,7 +51,9 @@ class DinoController {
         var habitat = await Habitat.find(id)
         var dinos = await habitat.dino().fetch()
         console.log(dinos)
-        response.send(dinos)
+        response.send({
+            dinos: dinos
+        })
     }
 
 
