@@ -20,7 +20,8 @@ Factory.blueprint('App/Models/Dino', async (faker, i, data) => {
         height: data.height,
         weight: data.weight,
         era: data.era,
-        diet: data.diet
+        diet: data.diet,
+        habitat_id: data.habitat_id
     }
 
 })

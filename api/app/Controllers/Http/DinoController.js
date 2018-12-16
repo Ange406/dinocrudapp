@@ -1,5 +1,6 @@
 'use strict'
 const Dino = use('App/Models/Dino')
+const Habitat = use('App/Models/Habitat')
 
 class DinoController {
     async getDino({ request, response }) {
@@ -45,6 +46,12 @@ class DinoController {
             dinos: dinos
         })
 
+    }
+    async displayDinosInHabitat({ request, response, params: { id } }) {
+        var habitat = await Habitat.find(id)
+        var dinos = await habitat.dino().fetch()
+        console.log(dinos)
+        response.send(dinos)
     }
 
 

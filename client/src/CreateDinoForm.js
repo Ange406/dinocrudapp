@@ -47,7 +47,7 @@ export default class CreateDinoForm extends React.Component {
                     <Row>
                         <Button onClick={() => { this.props.readDino(item) }}>Read</Button>
                         <Button onClick={() => { this.props.deleteDino(item.id) }}>Delete</Button>
-                        <Button onClick={() => { this.props.editDino(item) }}>Edit</Button>
+                        {/* <Button onClick={() => { this.props.editDino(item) }}>Edit</Button> */}
                     </Row>
                 </FormGroup>)
         )
@@ -59,7 +59,7 @@ export default class CreateDinoForm extends React.Component {
                 <Col md={2}>
                 </Col>
                 <Col md={4}>
-                    {/* {this.displayReadDinos()} */}
+                    {this.displayReadDinos()}
                 </Col>
                 <Col md={4}>
                     {this.displayCreateDino()}

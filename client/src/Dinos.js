@@ -7,6 +7,8 @@ import {
     NavbarToggler,
     NavbarBrand,
     Nav,
+    NavItem,
+    NavLink,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -20,7 +22,10 @@ import DinoSlides from './Carousel.js'
 export default class Dinos extends React.Component {
     constructor() {
         super()
+
+
         this.state = {
+            collapsed: true,
             dinoToEdit: {
                 id: -1,
                 name: "",
@@ -46,8 +51,14 @@ export default class Dinos extends React.Component {
         this.updateDino = this.updateDino.bind(this);
         this.submitEdit = this.submitEdit.bind(this);
         this.submitCreate = this.submitCreate.bind(this);
-    }
+        this.toggle = this.toggle.bind(this);
 
+    }
+    toggle() {
+        this.setState({
+          isOpen: !this.state.isOpen
+        });
+      }
     handleChange(event) {
         let name = event.target.name;
         this.setState({
@@ -68,15 +79,15 @@ export default class Dinos extends React.Component {
 
     deleteDino(id) {
         //This is the actual delete
-        axios.delete('/dino/'+id, {
-          })
-          .then((response)=> {
-            this.setState({ dinosaurs: response.data.dinos })
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        axios.delete('/dino/' + id, {
+        })
+            .then((response) => {
+                this.setState({ dinosaurs: response.data.dinos })
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     editDino(dino) {
@@ -86,20 +97,20 @@ export default class Dinos extends React.Component {
 
     updateDino(newDino) {
         //This is the actual update to the dino
-        axios.delete('/dino/'+newDino.id, {
-             name: newDino.name,
-             height: newDino.height,
-             weight: newDino.weight,
-             era: newDino.era,
-             diet: newDino.diet
-          })
-          .then((response)=> {
-            this.setState({ dinosaurs: response.data.dinos })
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        axios.put('/dino/' + newDino.id, {
+            name: newDino.name,
+            height: newDino.height,
+            weight: newDino.weight,
+            era: newDino.era,
+            diet: newDino.diet
+        })
+            .then((response) => {
+                this.setState({ dinosaurs: response.data.dinos })
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     submitCreate(event) {
@@ -110,14 +121,14 @@ export default class Dinos extends React.Component {
             weight: this.state.weight,
             era: this.state.era,
             diet: this.state.diet
-          })
-          .then((response)=> {
-            this.setState({ dinosaurs: response.data.dinos })
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+        })
+            .then((response) => {
+                this.setState({ dinosaurs: response.data.dinos })
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     submitEdit(event) {
@@ -165,34 +176,26 @@ export default class Dinos extends React.Component {
             <Router>
                 <div>
                     <div>
-                        <Navbar color="light" light expand="md">
+                        <Navbar color="faded" light expand="md">
                             <NavbarBrand href="/">DinosaurCRUD 2018</NavbarBrand>
                             <NavbarToggler onClick={this.toggle} />
                             <Collapse isOpen={this.state.isOpen} navbar>
                                 <Nav className="ml-auto" navbar>
-                                    <UncontrolledDropdown nav inNavbar>
-                                        <DropdownToggle nav caret>
-                                            Options
-                                        </DropdownToggle>
-                                        <DropdownMenu right>
-                                            <Link to="/">
-                                                <DropdownItem>
-                                                    Home
-                                                </DropdownItem>
-                                            </Link>
-                                            <DropdownItem divider />
-                                            <Link to="/display">
-                                                <DropdownItem>
-                                                    DisplayDinos
-                                                </DropdownItem>
-                                            </Link>
-                                            <Link to="/create">
-                                                <DropdownItem>
-                                                    Create
-                                                </DropdownItem>
-                                            </Link>
-                                        </DropdownMenu>
-                                    </UncontrolledDropdown>
+                                    <NavItem>
+                                        <NavLink>
+                                            <Link to="/">Home</Link>
+                                        </NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink>
+                                            <Link to="/display">Display</Link>
+                                        </NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink>
+                                            <Link to="/create">Create</Link>
+                                        </NavLink>
+                                    </NavItem>
                                 </Nav>
                             </Collapse>
                         </Navbar>
@@ -217,6 +220,8 @@ export default class Dinos extends React.Component {
                         render={() => <CreateDinoForm
                             dinosaurs={this.state.dinosaurs}
 
+                            readDino={this.readDino}
+                            deleteDino={this.deleteDino}
                             handleChange={this.handleChange}
                             submitCreate={this.submitCreate}
                         />}

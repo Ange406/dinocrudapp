@@ -20,4 +20,5 @@ Route.get('/dino', "DinoController.getDino")
 Route.post('/dino', "DinoController.createDino")
 Route.delete('/dino/:id', "DinoController.deleteDino")
 Route.put('/dino/:id', "DinoController.updateDino")
+Route.get('/dino/habitat/:id', "DinoController.displayDinosInHabitat")
 
